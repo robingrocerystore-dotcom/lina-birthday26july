@@ -75,11 +75,14 @@ max-width:700px;
 margin:20px auto;
 }
 
+
 .slider img{
 width:100%;
-height:450px;
-object-fit:cover;
+max-height:80vh;
+height:auto;
+object-fit:contain;
 border-radius:20px;
+background:rgba(255,255,255,0.1);
 box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
@@ -144,7 +147,7 @@ font-size:1.2rem;
 
 <div id="status"></div>
 
-<div id="countdown"></div>
+
 
 <br>
 
@@ -157,8 +160,9 @@ font-size:1.2rem;
 <div id="main" class="main">
 
 <h1>🎂 Happy Birthday Lina ❤️</h1>
+  <div id="countdown"></div>
 
-<audio id="music" autoplay loop>
+<audio id="music" loop>
 <source src="tumtak.mp3.mp3" type="audio/mpeg">
 </audio>
 
@@ -232,7 +236,6 @@ p.type = "password";
 }
 
 }
-
 function openSite(){
 
 document.getElementById("login").style.display = "none";
@@ -243,8 +246,11 @@ document.getElementById("music").play().catch(()=>{});
 startConfetti();
 startTyping();
 createHearts();
+startCountdown();
 
 }
+
+
 function startCountdown(){
 
 const target = new Date("2026-07-26T00:00:00");
