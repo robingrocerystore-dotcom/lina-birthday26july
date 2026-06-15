@@ -1,2 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Lina ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffd3e0);
+overflow-x:hidden;
+color:white;
+text-align:center;
+}
+
+.page{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:25px;
+max-width:900px;
+width:100%;
+box-shadow:0 10px 40px rgba(0,0,0,.2);
+}
+
+h1{
+font-size:3rem;
+margin-bottom:15px;
+}
+
+input{
+padding:15px;
+width:100%;
+border:none;
+border-radius:10px;
+margin:15px 0;
+font-size:1rem;
+}
+
+button{
+padding:14px 28px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-weight:bold;
+font-size:1rem;
+}
+
+.main{
+display:none;
+padding:20px;
+}
+
+.slider{
+max-width:700px;
+margin:20px auto;
+}
+
+.slider img{
+width:100%;
+height:450px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.message{
+background:rgba(255,255,255,.15);
+padding:25px;
+border-radius:20px;
+line-height:2;
+font-size:1.1rem;
+margin:30px auto;
+max-width:900px;
+white-space:pre-line;
+}
+
+.quote{
+font-size:1.3rem;
+padding:25px;
+font-style:italic;
+}
+
+.surprise{
+display:none;
+background:white;
+color:#ff4081;
+padding:25px;
+border-radius:20px;
+margin-top:20px;
+font-weight:bold;
+}
+
+.heart{
+position:fixed;
+bottom:-50px;
+animation:float 7s linear forwards;
+pointer-events:none;
+}
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-110vh);opacity:0;}
+}
+
+footer{
+padding:40px;
+font-size:1.2rem;
+}
+</style>
+
+</head>
+<body>
+
+<div id="login" class="page">
+<div class="card">
+<h1>🎂 Birthday Surprise ❤️</h1>
+<p>Enter your secret code</p>
+
+<input id="pass" type="password" placeholder="Enter code">
+
+<button onclick="checkPass()">Open Surprise 🎁</button>
+
+</div>
+</div>
+
+<div id="main" class="main">
+
+<h1>🎂 Happy Birthday Lina ❤️</h1>
+
+<audio id="music" autoplay loop>
+<source src="tumtak.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<div class="slider">
+<img id="slide" src="photos/photo1.png">
+</div>
+
+<div id="message" class="message"></div>
+
+<div class="card">
+<h2>💖 Love Quote</h2>
+<div id="quote" class="quote"></div>
+</div>
+
+<br>
+
+<button onclick="showSurprise()">🎁 Hidden Surprise</button>
+
+<div id="surprise" class="surprise">
+No matter where life takes us,
+you'll always have a special place in my heart. ❤️
+</div>
+
+<footer>
+With love,<br>
+Dipti ❤️🫂
+</footer>
+
+</div>
+
+<script>
+
+const PASSWORD = "26july";
+
+function checkPass(){
+
+const p=document.getElementById("pass").value;
+
+if(p===PASSWORD){
+
+document.getElementById("login").style.display="none";
+document.getElementById("main").style.display="block";
+
+document.getElementById("music").play().catch(()=>{});
+
+startConfetti();
+startTyping();
+createHearts();
+
+}else{
+alert("Wrong Password");
+}
+}
+
+const msg=`Dear Lina, ❤️
+
+I want to tell you that no matter how far you are from me now, you'll always be close to my heart. Time flies, dates change, and life moves on, but the memories we shared will remain forever.
+
+On this special occasion of your birthday, I pray for your good health, success, happiness, and endless joy. May this year bring you countless reasons to smile, dreams that turn into reality, and moments that become cherished memories for a lifetime.
+
+Thank you for being such a wonderful soul and for all the beautiful memories. You truly deserve all the love, happiness, and blessings that life has to offer.
+
+Happy Birthday, my girl! 🎂✨💕
+
+Lots of love and warm hugs. ❤️🫂
+Always in my heart. 💖🌷`;
+
+function startTyping(){
+
+let i=0;
+let target=document.getElementById("message");
+
+function type(){
+if(i<msg.length){
+target.innerHTML += msg.charAt(i);
+i++;
+setTimeout(type,25);
+}
+}
+
+type();
+}
+
+const images=[
+"photos/photo1.png",
+"photos/photo3.jpeg",
+"photos/photo4.jpeg",
+"photos/photo45.jpeg",
+"photos/asd.jpeg"
+];
+
+let current=0;
+
+setInterval(()=>{
+current=(current+1)%images.length;
+document.getElementById("slide").src=images[current];
+},3000);
+
+const quotes=[
+"Every love story is beautiful, but yours is my favorite ❤️",
+"Distance means so little when someone means so much 💖",
+"You are the reason behind countless smiles 🌷",
+"Some people make the world brighter just by being in it ✨",
+"Forever grateful for your beautiful soul ❤️"
+];
+
+let q=0;
+
+setInterval(()=>{
+document.getElementById("quote").innerText=quotes[q];
+q=(q+1)%quotes.length;
+},2500);
+
+document.getElementById("quote").innerText=quotes[0];
+
+function showSurprise(){
+document.getElementById("surprise").style.display="block";
+}
+
+function startConfetti(){
+
+const end=Date.now()+8000;
+
+(function frame(){
+
+confetti({
+particleCount:5,
+spread:70,
+origin:{x:0}
+});
+
+confetti({
+particleCount:5,
+spread:70,
+origin:{x:1}
+});
+
+if(Date.now()<end){
+requestAnimationFrame(frame);
+}
+
+})();
+}
+
+function createHearts(){
+
+setInterval(()=>{
+
+let h=document.createElement("div");
+
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(20+Math.random()*25)+"px";
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+h.remove();
+},7000);
+
+},500);
+
+}
+</script>
+
+</body>
+</html>
 
 
