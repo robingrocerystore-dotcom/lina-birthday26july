@@ -152,7 +152,7 @@ font-size:1.2rem;
 </audio>
 
 <div class="slider">
-<img id="slide" src="photos/photo1.png">
+<img id="slide" src="photos/a1.jpeg">
 </div>
 
 <div id="message" class="message"></div>
@@ -183,6 +183,43 @@ Dipti ❤️🫂
 const PASSWORD = "26july";
 
 function checkPass(){
+
+const p = document.getElementById("pass").value;
+
+const unlockDate = new Date("2026-07-26T00:00:00");
+const now = new Date();
+
+// Master password works anytime
+if(p === "kanha"){
+openSite();
+return;
+}
+
+// Normal birthday password works only after 26 July
+if(now < unlockDate){
+alert("🎂 This surprise will unlock on 26 July.");
+return;
+}
+
+if(p === "26july"){
+openSite();
+}else{
+alert("Wrong Password");
+}
+}
+
+function openSite(){
+
+document.getElementById("login").style.display = "none";
+document.getElementById("main").style.display = "block";
+
+document.getElementById("music").play().catch(()=>{});
+
+startConfetti();
+startTyping();
+createHearts();
+}
+
 
 const p=document.getElementById("pass").value;
 
@@ -232,11 +269,15 @@ type();
 }
 
 const images=[
-"photos/photo1.png",
-"photos/photo3.jpeg",
-"photos/photo4.jpeg",
-"photos/photo45.jpeg",
-"photos/asd.jpeg"
+"photos/a1.jpeg",
+"photos/a2.png",
+"photos/a3.jpeg",
+"photos/a4.jpeg",
+"photos/a5.jpeg",
+"photos/a6.jpeg",
+"photos/a7.jpeg",
+"photos/a8.jpeg",
+"photos/a9.jpeg"
 ];
 
 let current=0;
