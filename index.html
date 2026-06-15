@@ -221,23 +221,7 @@ createHearts();
 }
 
 
-const p=document.getElementById("pass").value;
 
-if(p===PASSWORD){
-
-document.getElementById("login").style.display="none";
-document.getElementById("main").style.display="block";
-
-document.getElementById("music").play().catch(()=>{});
-
-startConfetti();
-startTyping();
-createHearts();
-
-}else{
-alert("Wrong Password");
-}
-}
 
 const msg=`Dear Lina, ❤️
 
