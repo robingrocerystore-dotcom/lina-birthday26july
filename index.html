@@ -138,7 +138,18 @@ font-size:1.2rem;
 
 <input id="pass" type="password" placeholder="Enter code">
 
+<button type="button" onclick="togglePassword()">👁 Show Password</button>
+
+<br><br>
+
+<div id="status"></div>
+
+<div id="countdown"></div>
+
+<br>
+
 <button onclick="checkPass()">Open Surprise 🎁</button>
+
 
 </div>
 </div>
@@ -184,28 +195,42 @@ const PASSWORD = "26july";
 
 function checkPass(){
 
-const p = document.getElementById("pass").value;
+const p = document.getElementById("pass").value.trim();
+const status = document.getElementById("status");
 
 const unlockDate = new Date("2026-07-26T00:00:00");
 const now = new Date();
 
-// Master password works anytime
 if(p === "kanha"){
 openSite();
 return;
 }
 
-// Normal birthday password works only after 26 July
+if(p === "26july"){
+
 if(now < unlockDate){
-alert("🎂 This surprise will unlock on 26 July.");
+startCountdown();
 return;
 }
 
-if(p === "26july"){
 openSite();
-}else{
-alert("Wrong Password");
+return;
 }
+
+status.innerHTML = "❌ Wrong Password. Try Again";
+status.style.color = "#ffdddd";
+
+}
+function togglePassword(){
+
+const p = document.getElementById("pass");
+
+if(p.type === "password"){
+p.type = "text";
+}else{
+p.type = "password";
+}
+
 }
 
 function openSite(){
@@ -218,7 +243,35 @@ document.getElementById("music").play().catch(()=>{});
 startConfetti();
 startTyping();
 createHearts();
+
 }
+function startCountdown(){
+
+const target = new Date("2026-07-26T00:00:00");
+
+const timer = setInterval(()=>{
+
+const diff = target - new Date();
+
+if(diff <= 0){
+clearInterval(timer);
+document.getElementById("countdown").innerHTML =
+"🎉 Birthday Time! Enter password again.";
+return;
+}
+
+const days = Math.floor(diff/(1000*60*60*24));
+const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+const seconds = Math.floor((diff%(1000*60))/1000);
+
+document.getElementById("countdown").innerHTML =
+`🎂 Countdown: ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+
+},1000);
+
+}
+
 
 
 
