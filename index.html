@@ -69,16 +69,23 @@ font-size:1rem;
 display:none;
 padding:20px;
 }
-
 .slider{
-max-width:700px;
-margin:20px auto;
+max-width:1000px;
+margin:30px auto;
+padding:15px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(15px);
+border-radius:30px;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
+
+
 
 
 .slider img{
 width:100%;
 max-height:80vh;
+  animation:floatPhoto 4s ease-in-out infinite;
 height:auto;
 object-fit:contain;
 border-radius:20px;
@@ -120,9 +127,10 @@ animation:float 7s linear forwards;
 pointer-events:none;
 }
 
-@keyframes float{
-0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-110vh);opacity:0;}
+@keyframes floatPhoto{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
 }
 
 footer{
@@ -136,7 +144,21 @@ font-size:1.2rem;
 
 <div id="login" class="page">
 <div class="card">
-<h1>🎂 Birthday Surprise ❤️</h1>
+<h1 style="
+font-size:4rem;
+text-shadow:0 0 20px rgba(255,255,255,.8);
+">
+🎂 Happy Birthday Lina ❤️
+</h1>
+
+<p style="
+font-size:1.3rem;
+margin-top:10px;
+opacity:.9;
+">
+A day as beautiful as you ✨🌹
+</p>
+
 <p>Enter your secret code</p>
 
 <input id="pass" type="password" placeholder="Enter code">
@@ -156,6 +178,32 @@ font-size:1.2rem;
 
 </div>
 </div>
+<div id="waiting" class="page" style="display:none;">
+<div class="card">
+
+<h1 style="font-size:60px;">⏳</h1>
+
+<h2>Password Correct ✅</h2>
+
+<br>
+
+<div id="bigCountdown"
+style="
+font-size:40px;
+font-weight:bold;
+margin:20px 0;
+">
+Loading...
+</div>
+
+<p style="font-size:20px;line-height:1.8;">
+Password is correct.<br>
+Please wait for 26 July.<br>
+This surprise will unlock automatically. ❤️
+</p>
+
+</div>
+</div>
 
 <div id="main" class="main">
 
@@ -171,6 +219,14 @@ font-size:1.2rem;
 </div>
 
 <div id="message" class="message"></div>
+<div id="photoCount"
+style="
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+">
+📸 Memory 1 / 9
+</div>
 
 <div class="card">
 <h2>💖 Love Quote</h2>
@@ -227,11 +283,17 @@ return;
 }
 
 if(p === "july26"){
-
 if(now < unlockDate){
+
+document.getElementById("login").style.display = "none";
+document.getElementById("waiting").style.display = "flex";
+
 startCountdown();
+
 return;
 }
+
+
 
 openSite();
 return;
@@ -255,8 +317,8 @@ p.type = "password";
 function openSite(){
 
 document.getElementById("login").style.display = "none";
+document.getElementById("waiting").style.display = "none";
 document.getElementById("main").style.display = "block";
-
 document.getElementById("music").play().catch(()=>{});
 
 startConfetti();
@@ -265,8 +327,6 @@ createHearts();
 startCountdown();
 
 }
-
-
 function startCountdown(){
 
 const target = new Date("2026-07-26T00:00:00");
@@ -276,9 +336,13 @@ const timer = setInterval(()=>{
 const diff = target - new Date();
 
 if(diff <= 0){
+
 clearInterval(timer);
-document.getElementById("countdown").innerHTML =
-"🎉 Birthday Time! Enter password again.";
+
+document.getElementById("waiting").style.display = "none";
+
+openSite();
+
 return;
 }
 
@@ -287,12 +351,14 @@ const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
 const seconds = Math.floor((diff%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML =
-`🎂 Countdown: ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+document.getElementById("bigCountdown").innerHTML =
+`${days} Days<br>${hours} Hours<br>${minutes} Minutes<br>${seconds} Seconds`;
 
 },1000);
 
 }
+
+
 
 
 
@@ -338,13 +404,19 @@ const images=[
 "photos/a8.jpeg",
 "photos/a9.jpeg"
 ];
-
 let current=0;
 
 setInterval(()=>{
+
 current=(current+1)%images.length;
+
 document.getElementById("slide").src=images[current];
+
+document.getElementById("photoCount").innerHTML =
+`📸 Memory ${current+1} / ${images.length}`;
+
 },3000);
+
 
 const quotes=[
 "Every love story is beautiful, but yours is my favorite ❤️",
